@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#005CA9">
+  <title>Tình huống hỗ trợ hành khách thất lạc hành lý | Vietnam Airlines - Chi nhánh Nha Trang</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<main class="wrap">
+  <div class="brandbar">
+    <div class="brand">
+      <div class="mark" aria-hidden="true">✦</div>
+      <div>
+        <div class="brand-name">Vietnam Airlines</div>
+        <div class="brand-sub">Chi nhánh Nha Trang</div>
+      </div>
+    </div>
+    <div class="badge">Khảo sát nội bộ</div>
+  </div>
+
+  <section class="hero">
+    <div class="goldline"></div>
+    <div class="hero-inner">
+      <div class="eyebrow">Nâng tầm dịch vụ · CXR</div>
+      <h1>Khảo sát xử lý tình huống</h1>
+      <p class="lead">Một câu hỏi ngắn, tối ưu cho điện thoại. Anh/Chị có thể lựa chọn một hoặc nhiều phương án phù hợp.</p>
+      <div class="meta">
+        <span>✓ Khoảng 1 phút</span>
+        <span>✓ Có thể chọn nhiều đáp án</span>
+        <span>✓ Câu hỏi bắt buộc</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="qno">01</div>
+    <p class="question">Một hành khách nước ngoài lớn tuổi bị thất lạc hành lý, đang rất lo lắng và tìm nhầm đến một nhân viên không thuộc đơn vị xử lý hành lý. Chuyến bay đã kết thúc và khách không biết phải liên hệ với ai.
+
+Nếu là nhân viên đó, theo anh/chị, cách ứng xử phù hợp nhất với tinh thần Nâng tầm là gì? <span class="required">*</span></p>
+    <p class="hint">Chọn một hoặc nhiều phương án.</p>
+
+    <form id="survey" novalidate>
+      <div class="options">
+        <label class="option"><input type="checkbox" name="answer" value="A" data-text="Chỉ dẫn khách đến đúng quầy/đơn vị xử lý hành lý"><span><strong>A.</strong> Chỉ dẫn khách đến đúng quầy/đơn vị xử lý hành lý</span></label>
+<label class="option"><input type="checkbox" name="answer" value="B" data-text="Giải thích rõ quy trình và hướng dẫn khách cách liên hệ đơn vị phụ trách"><span><strong>B.</strong> Giải thích rõ quy trình và hướng dẫn khách cách liên hệ đơn vị phụ trách</span></label>
+<label class="option"><input type="checkbox" name="answer" value="C" data-text="Chủ động liên hệ đơn vị phụ trách, xác nhận nơi tiếp nhận rồi hướng dẫn khách tới"><span><strong>C.</strong> Chủ động liên hệ đơn vị phụ trách, xác nhận nơi tiếp nhận rồi hướng dẫn khách tới</span></label>
+<label class="option"><input type="checkbox" name="answer" value="D" data-text="Chủ động kết nối/bàn giao khách và chỉ rời đi khi chắc chắn đã có người tiếp nhận vấn đề"><span><strong>D.</strong> Chủ động kết nối/bàn giao khách và chỉ rời đi khi chắc chắn đã có người tiếp nhận vấn đề</span></label>
+<label class="option"><input type="checkbox" name="answer" value="E" data-text="Tùy chức năng, vị trí công tác và quy định của từng đơn vị; không nên áp dụng một chuẩn chung cho mọi nhân viên tại sân bay"><span><strong>E.</strong> Tùy chức năng, vị trí công tác và quy định của từng đơn vị; không nên áp dụng một chuẩn chung cho mọi nhân viên tại sân bay</span></label>
+      </div>
+
+      <div class="error" id="validation">Vui lòng chọn ít nhất một phương án.</div>
+
+      <div class="actions">
+        <button class="clear" type="button" id="clearBtn">Xóa lựa chọn</button>
+        <button class="submit" type="submit" id="submitBtn">Gửi khảo sát</button>
+      </div>
+
+      <div class="notice" id="notice" role="status" aria-live="polite"></div>
+    </form>
+  </section>
+
+  <div class="footer">
+    <strong>Vietnam Airlines · Chi nhánh Nha Trang</strong><br>
+    Khảo sát nội bộ chương trình Nâng tầm dịch vụ tại CXR
+  </div>
+</main>
+
+<script src="../assets/config.js"></script>
+<script>
+const SURVEY_ID = "cau-1";
+const QUESTION_TEXT = "Một hành khách nước ngoài lớn tuổi bị thất lạc hành lý, đang rất lo lắng và tìm nhầm đến một nhân viên không thuộc đơn vị xử lý hành lý. Chuyến bay đã kết thúc và khách không biết phải liên hệ với ai.\n\nNếu là nhân viên đó, theo anh/chị, cách ứng xử phù hợp nhất với tinh thần Nâng tầm là gì?";
+
+const form = document.getElementById("survey");
+const submitBtn = document.getElementById("submitBtn");
+const clearBtn = document.getElementById("clearBtn");
+const validation = document.getElementById("validation");
+const notice = document.getElementById("notice");
+
+function getSelected() {
+  return [...document.querySelectorAll('input[name="answer"]:checked')].map(el => ({
+    code: el.value,
+    text: el.dataset.text
+  }));
+}
+
+function showNotice(type, text) {
+  notice.className = "notice " + type;
+  notice.textContent = text;
+}
+
+function clearNotice() {
+  notice.className = "notice";
+  notice.textContent = "";
+}
+
+document.querySelectorAll('input[name="answer"]').forEach(el => {
+  el.addEventListener("change", () => {
+    validation.style.display = "none";
+    clearNotice();
+  });
+});
+
+clearBtn.addEventListener("click", () => {
+  form.reset();
+  validation.style.display = "none";
+  clearNotice();
+});
+
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  clearNotice();
+
+  const selected = getSelected();
+
+  if (!selected.length) {
+    validation.style.display = "block";
+    return;
+  }
+
+  if (!FORM_ENDPOINT || !FORM_ENDPOINT.startsWith("https://script.google.com/")) {
+    showNotice("warning", "Chưa cấu hình đường dẫn Google Apps Script trong assets/config.js.");
+    return;
+  }
+
+  const responseId =
+    SURVEY_ID + "-" +
+    Date.now().toString(36) + "-" +
+    Math.random().toString(36).slice(2,8);
+
+  const data = new URLSearchParams();
+  data.append("responseId", responseId);
+  data.append("surveyId", SURVEY_ID);
+  data.append("question", QUESTION_TEXT);
+  data.append("answerCodes", selected.map(x => x.code).join(", "));
+  data.append("answerTexts", selected.map(x => x.code + ". " + x.text).join(" | "));
+  data.append("clientTime", new Date().toLocaleString("vi-VN"));
+  data.append("sourceUrl", window.location.href);
+
+  submitBtn.disabled = true;
+  clearBtn.disabled = true;
+  submitBtn.textContent = "Đang gửi...";
+
+  try {
+    // no-cors phù hợp với Google Apps Script Web App.
+    // Trình duyệt không đọc được response body, nhưng dữ liệu vẫn được gửi.
+    await fetch(FORM_ENDPOINT, {
+      method: "POST",
+      mode: "no-cors",
+      body: data
+    });
+
+    showNotice("success", "Cảm ơn Anh/Chị. Câu trả lời đã được ghi nhận.");
+    form.reset();
+
+    // Chống bấm gửi liên tục do vô tình.
+    submitBtn.textContent = "Đã gửi";
+    setTimeout(() => {
+      submitBtn.disabled = false;
+      clearBtn.disabled = false;
+      submitBtn.textContent = "Gửi khảo sát";
+    }, 1800);
+
+  } catch (err) {
+    showNotice("errorbox", "Chưa gửi được dữ liệu. Vui lòng kiểm tra kết nối mạng và thử lại.");
+    submitBtn.disabled = false;
+    clearBtn.disabled = false;
+    submitBtn.textContent = "Gửi khảo sát";
+  }
+});
+</script>
+</body>
+</html>
